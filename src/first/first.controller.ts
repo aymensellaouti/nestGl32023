@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, Request, UseGuards } from "@nestjs/common";
 import { FirstService } from "./first.service";
 import { FirstDto } from "./dto/first.dto";
 import { FirstEntity } from "./first.entity";
 import { PaginationDto } from "./dto/pagination.dto";
+import { AuthGuard } from "@nestjs/passport";
+import { User } from "../user/entities/user.entity";
+import { GetUser } from "../auth/decorator/get-user.decorator";
 
 @Controller('first')
 export class FirstController {
@@ -11,7 +14,9 @@ export class FirstController {
     private firstService: FirstService) {
   }
   @Get()
-  hello(): string {
+  @UseGuards(AuthGuard('jwt'))
+  hello(@GetUser() user): string {
+    console.log(user);
     return this.firstService.hello();
   }
   @Post()

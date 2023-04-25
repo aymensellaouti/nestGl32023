@@ -16,7 +16,7 @@ export class FirstService {
   }
   hello() {
     const qb = this.firstRepository.createQueryBuilder('first');
-    console.log(qb);
+    // console.log(qb);
     this.loggerService.log('In  first');
     return 'hello    ';
   }
